@@ -5,6 +5,8 @@ aliando a eventual necessidade de ter um producer e um consumer em um único Pod
 
 ```sh
 docker compose up
+cd BG.PubSub.Api/
+dotnet run
 ```
 
 ```http
