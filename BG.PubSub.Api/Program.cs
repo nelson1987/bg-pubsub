@@ -6,6 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<ICriaAlunoProducer, CriaAlunoProducer>();
+builder.Services.AddTransient<ICriaAlunoConsumer, CriaAlunoConsumer>();
 builder.Services.AddMassTransit(x =>
 {
     x.SetKebabCaseEndpointNameFormatter();
@@ -37,7 +38,8 @@ public interface ICriaAlunoProducer
 {
     Task Send(CriaAlunoEvent @event);
 }
-
+public interface ICriaAlunoConsumer : 
+IConsumer<CriaAlunoEvent> {}
 public class CriaAlunoProducer : ICriaAlunoProducer
 {
     private readonly IBus _producer;
@@ -58,7 +60,7 @@ public class CriaAlunoProducer : ICriaAlunoProducer
 }
 
 public class CriaAlunoConsumer :
-    IConsumer<CriaAlunoEvent>
+    ICriaAlunoConsumer
 {
     private readonly ILogger<CriaAlunoConsumer> _logger;
 
