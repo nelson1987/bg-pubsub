@@ -1,6 +1,5 @@
 using BG.PubSub.Api.Events;
 using MassTransit;
-using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
@@ -38,6 +37,7 @@ app.MapPost("/evento", async (string nome,
 
 app.Run();
 
+public partial class Program { }
 public interface ICriaAlunoProducer
 {
     Task Send(CriaAlunoEvent @event);
