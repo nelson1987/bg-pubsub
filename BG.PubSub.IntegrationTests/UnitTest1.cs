@@ -6,17 +6,29 @@ using Ductus.FluentDocker.Model.Compose;
 using Ductus.FluentDocker.Services;
 using Ductus.FluentDocker.Services.Impl;
 using Ductus.FluentDocker.Model.Common;
-using Microsoft.Extensions.DependencyInjection;
 using System.Diagnostics;
+using Xunit.Abstractions;
+
 
 public class UnitTest1 : IClassFixture<MyTestFixture>
 {
+    
+    private readonly ITestOutputHelper output;
+
+    public UnitTest1(ITestOutputHelper output)
+    {
+        this.output = output;
+    }
+
     [Fact]
     public async void Test1()
     {
-        Trace.WriteLine($"method: {nameof(Test1)}");
+
+        output.WriteLine($"method: {nameof(Test1)}");
         //var fixture = new Fixture().Customize(new AutoMoqCustomization());
         //var fluent = new MyTestFixture();
+
+
         //Arrange
         // var evento = fixture.Create<CriaAlunoEvent>();
         // await RabbitFixture.Produce(evento);
