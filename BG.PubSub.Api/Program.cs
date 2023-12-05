@@ -1,5 +1,6 @@
 using BG.PubSub.Api.Events;
 using MassTransit;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();

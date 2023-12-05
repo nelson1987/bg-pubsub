@@ -7,12 +7,13 @@ using Ductus.FluentDocker.Services;
 using Ductus.FluentDocker.Services.Impl;
 using Ductus.FluentDocker.Model.Common;
 using Microsoft.Extensions.DependencyInjection;
-public class UnitTest1
+public class UnitTest1 : IClassFixture<MyTestFixture>
 {
     [Fact]
     public async void Test1()
     {
-        var fixture = new Fixture().Customize(new AutoMoqCustomization());
+        //var fixture = new Fixture().Customize(new AutoMoqCustomization());
+        //var fluent = new MyTestFixture();
         //Arrange
         // var evento = fixture.Create<CriaAlunoEvent>();
         // await RabbitFixture.Produce(evento);
@@ -103,7 +104,7 @@ public class MyTestFixture : DockerComposeTestBase
     protected override ICompositeService Build()
     {
         var file = Path.Combine(Directory.GetCurrentDirectory(),
-            (TemplateString)"Fixture/docker-compose.yml");
+            (TemplateString)"docker-compose.yaml");
 
         return new DockerComposeCompositeService(
             DockerHost,
