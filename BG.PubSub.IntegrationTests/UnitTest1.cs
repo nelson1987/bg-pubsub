@@ -1,38 +1,73 @@
-
+using BG.PubSub.Api.Events;
 using Ductus.FluentDocker.Model.Common;
 using Ductus.FluentDocker.Model.Compose;
 using Ductus.FluentDocker.Services;
 using Ductus.FluentDocker.Services.Impl;
-using Xunit.Abstractions;
+using MassTransit;
+using MassTransit.Testing;
+using Microsoft.AspNetCore.Mvc.Testing;
+using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
+using System.Text;
 
 namespace BG.PubSub.IntegrationTests;
-public class UnitTest1 : IClassFixture<MyTestFixture>
+public sealed class RabbitMqContainerTest : IClassFixture<MyTestFixture>
 {
-    
-    private readonly ITestOutputHelper output;
-
-    public UnitTest1(ITestOutputHelper output)
+    [Fact(DisplayName ="Teste Without container(Mock - TestHarness)")]
+    public async Task CriacaoApi()
     {
-        this.output = output;
+        await using var application = new WebApplicationFactory<Program>()
+                .WithWebHostBuilder(builder =>
+                    builder.ConfigureServices(services =>
+                        services.AddMassTransitTestHarness()));
+        var testHarness = application.Services.GetTestHarness();
+        using var client = application.CreateClient();
+        var nome = "nelson";
+        var submitOrderResponse = await client.PostAsync($"/evento?nome={nome}", null);
+        var consumerTest = testHarness.GetConsumerHarness<CriaAlunoConsumer>();
+        Assert.True(await consumerTest.Consumed.Any<CriaAlunoEvent>(x => x.Context.Message.Nome == nome));
     }
 
-    [Fact]
-    public async void Test1()
+    [Fact(DisplayName = "Teste With container")]
+    public void ConsumeMessageFromQueue()
     {
+        const string queue = "hello";
 
-        output.WriteLine($"method: {nameof(Test1)}");
-        //var fixture = new Fixture().Customize(new AutoMoqCustomization());
-        //var fluent = new MyTestFixture();
+        const string message = "Hello World!";
 
+        string actualMessage = null;
 
-        //Arrange
-        // var evento = fixture.Create<CriaAlunoEvent>();
-        // await RabbitFixture.Produce(evento);
-        // //Act
+        // Signal the completion of message reception.
+        EventWaitHandle waitHandle = new ManualResetEvent(false);
 
-        // // Assert
-        // var criaAlunoEvent = RabbitFixture
-        //     .Consume<CriaAlunoEvent>();
+        // Create and establish a connection.
+        var connectionFactory = new ConnectionFactory()
+        {
+            Port = 5672,
+            Password = "guest",
+            UserName = "guest",
+            HostName = "localhost",
+        };
+        //connectionFactory.Uri = new Uri("amqp://guest:guest@localhost:5672");
+        using var connection = connectionFactory.CreateConnection();
+
+        // Send a message to the channel.
+        using var channel = connection.CreateModel();
+        channel.QueueDeclare(queue, false, false, false, null);
+        channel.BasicPublish(string.Empty, queue, null, Encoding.Default.GetBytes(message));
+
+        // Consume a message from the channel.
+        var consumer = new EventingBasicConsumer(channel);
+        consumer.Received += (_, eventArgs) =>
+        {
+            actualMessage = Encoding.Default.GetString(eventArgs.Body.ToArray());
+            waitHandle.Set();
+        };
+
+        channel.BasicConsume(queue, true, consumer);
+        waitHandle.WaitOne(TimeSpan.FromSeconds(1));
+
+        Assert.Equal(message, actualMessage);
     }
 }
 
@@ -82,6 +117,8 @@ public abstract class DockerComposeTestBase : IDisposable
 
     protected virtual void OnContainerInitialized()
     {
+        //Time to warm up container
+        Thread.Sleep(20000);
     }
 
     private void EnsureDockerHost()
