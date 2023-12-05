@@ -1,15 +1,11 @@
-// namespace BG.PubSub.IntegrationTests;
 
-using AutoFixture;
-using AutoFixture.AutoMoq;
+using Ductus.FluentDocker.Model.Common;
 using Ductus.FluentDocker.Model.Compose;
 using Ductus.FluentDocker.Services;
 using Ductus.FluentDocker.Services.Impl;
-using Ductus.FluentDocker.Model.Common;
-using System.Diagnostics;
 using Xunit.Abstractions;
 
-
+namespace BG.PubSub.IntegrationTests;
 public class UnitTest1 : IClassFixture<MyTestFixture>
 {
     
@@ -49,16 +45,13 @@ public abstract class DockerComposeTestBase : IDisposable
     {
         EnsureDockerHost();
 
-        Trace.WriteLine($"method: {nameof(Build)}");
         CompositeService = Build();
         try
         {
-            Trace.WriteLine($"method: Start");
             CompositeService.Start();
         }
         catch
         {
-            Trace.WriteLine($"method: {nameof(Dispose)}");
             CompositeService.Dispose();
             throw;
         }
@@ -85,13 +78,10 @@ public abstract class DockerComposeTestBase : IDisposable
 
     protected virtual void OnContainerTearDown()
     {
-        Trace.WriteLine($"method: {nameof(OnContainerTearDown)}");
     }
 
     protected virtual void OnContainerInitialized()
     {
-        Trace.WriteLine($"method: {nameof(OnContainerInitialized)}");
-
     }
 
     private void EnsureDockerHost()
