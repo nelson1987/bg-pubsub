@@ -1,9 +1,13 @@
+using BG.PubSub.Api.Events;
+using MassTransit;
+using Microsoft.AspNetCore.Mvc;
+
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<ICriaAlunoProducer, CriaAlunoProducer>();
 builder.Services.AddTransient<ICommandHandler<CriaAlunoCommand>, CriaAlunoCommandHandler>();
-builder.Services.AddTransient<ICriaAlunoConsumer, CriaAlunoConsumer>();
+builder.Services.AddTransient<IAlunoRepository, AlunoRepository>();
 builder.Services.AddMassTransit(x =>
 {
     x.SetKebabCaseEndpointNameFormatter();
@@ -52,7 +56,13 @@ public interface IAlunoRepository
 {
     Task Insert(CriaAlunoEvent @event);
 }
-
+public class AlunoRepository : IAlunoRepository
+{
+    public async Task Insert(CriaAlunoEvent @event)
+    {
+        await Console.Out.WriteLineAsync($"Event from Repository : {@event.Nome}");
+    }
+}
 public class CriaAlunoCommand : ICommand
 {
     public Guid Id = Guid.NewGuid();
@@ -112,3 +122,6 @@ public class CriaAlunoConsumer : IConsumer<CriaAlunoEvent>
         _logger.LogInformation($"Mensagem Consumida {message}.");
     }
 }
+//public class CriaAlunoEventHandler : IConsumerHandler<CriaAlunoEvent>
+//{
+//}
