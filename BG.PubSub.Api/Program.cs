@@ -7,6 +7,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<ICriaAlunoProducer, CriaAlunoProducer>();
 builder.Services.AddTransient<ICommandHandler<CriaAlunoCommand>, CriaAlunoCommandHandler>();
+builder.Services.AddTransient<IEventHandler<CriaAlunoEvent>, CriaAlunoEventHandler>();
 builder.Services.AddTransient<IAlunoRepository, AlunoRepository>();
 builder.Services.AddMassTransit(x =>
 {
@@ -30,10 +31,10 @@ app.UseHttpsRedirection();
 
 app.MapPost("/evento", async (string nome,
     CancellationToken cancellationToken,
-    [FromServices] ICommandHandler<CriaAlunoCommand> producer) =>
+    [FromServices] ICommandHandler<CriaAlunoCommand> handler) =>
 {
     var evento = new CriaAlunoCommand() { Nome = nome };
-    await producer.Handle(evento, cancellationToken);
+    await handler.Handle(evento, cancellationToken);
 })
 .WithName("PublicaEvento")
 .WithOpenApi();
@@ -41,16 +42,23 @@ app.MapPost("/evento", async (string nome,
 app.Run();
 
 public partial class Program { }
-public interface ICriaAlunoProducer
-{
-    Task Send(CriaAlunoEvent @event);
-}
 public interface ICommand
 {
+}
+public interface IEvent
+{
+}
+public interface IEventHandler<TEvent> where TEvent : IEvent
+{
+    Task Handle(TEvent consumer);
 }
 public interface ICommandHandler<TCommand> where TCommand : ICommand
 {
     Task Handle(TCommand command, CancellationToken cancellationToken);
+}
+public interface ICriaAlunoProducer
+{
+    Task Send(CriaAlunoEvent @event);
 }
 public interface IAlunoRepository
 {
@@ -68,23 +76,6 @@ public class CriaAlunoCommand : ICommand
     public Guid Id = Guid.NewGuid();
     public required string Nome { get; set; }
 }
-
-public class CriaAlunoCommandHandler : ICommandHandler<CriaAlunoCommand>
-{
-    private readonly ICriaAlunoProducer _producer;
-
-    public CriaAlunoCommandHandler(ICriaAlunoProducer producer)
-    {
-        _producer = producer;
-    }
-
-    public async Task Handle(CriaAlunoCommand command, CancellationToken cancellationToken)
-    {
-        var evento = new CriaAlunoEvent() { Nome = command.Nome };
-        await _producer.Send(evento);
-    }
-}
-
 public class CriaAlunoProducer : ICriaAlunoProducer
 {
     private readonly IBus _producer;
@@ -103,25 +94,46 @@ public class CriaAlunoProducer : ICriaAlunoProducer
         return Task.CompletedTask;
     }
 }
-
 public class CriaAlunoConsumer : IConsumer<CriaAlunoEvent>
 {
     private readonly ILogger<CriaAlunoConsumer> _logger;
-    private readonly IAlunoRepository _repository;
-    public CriaAlunoConsumer(ILogger<CriaAlunoConsumer> logger, IAlunoRepository repository)
+    private readonly IEventHandler<CriaAlunoEvent> _handler;
+    public CriaAlunoConsumer(ILogger<CriaAlunoConsumer> logger, IEventHandler<CriaAlunoEvent> handler)
     {
         _logger = logger;
-        _repository = repository;
+        _handler = handler;
     }
 
     public async Task Consume(ConsumeContext<CriaAlunoEvent> context)
     {
         var message = context.Message;
-        await _repository.Insert(message);
         await Console.Out.WriteLineAsync($"Message from Producer : {message.Nome}");
         _logger.LogInformation($"Mensagem Consumida {message}.");
+        await _handler.Handle(message);
     }
 }
-//public class CriaAlunoEventHandler : IConsumerHandler<CriaAlunoEvent>
-//{
-//}
+public class CriaAlunoCommandHandler : ICommandHandler<CriaAlunoCommand>
+{
+    private readonly ICriaAlunoProducer _producer;
+
+    public CriaAlunoCommandHandler(ICriaAlunoProducer producer)
+    {
+        _producer = producer;
+    }
+
+    public async Task Handle(CriaAlunoCommand command, CancellationToken cancellationToken)
+    {
+        await Console.Out.WriteLineAsync($"Command from CommandHandler : {command.Nome}");
+        var evento = new CriaAlunoEvent() { Nome = command.Nome };
+        await _producer.Send(evento);
+    }
+}
+public class CriaAlunoEventHandler : IEventHandler<CriaAlunoEvent>
+{
+    private readonly IAlunoRepository? _repository;
+    public async Task Handle(CriaAlunoEvent consumer)
+    {
+        await Console.Out.WriteLineAsync($"Message from EventHandler : {consumer.Nome}");
+        //_logger.LogInformation($"Mensagem Consumida {consumer}.");
+    }
+}
