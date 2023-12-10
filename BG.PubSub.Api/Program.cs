@@ -1,12 +1,9 @@
-using BG.PubSub.Api.Events;
-using MassTransit;
-using Microsoft.AspNetCore.Mvc;
-
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<ICriaAlunoProducer, CriaAlunoProducer>();
 builder.Services.AddTransient<ICommandHandler<CriaAlunoCommand>, CriaAlunoCommandHandler>();
+builder.Services.AddTransient<ICriaAlunoConsumer, CriaAlunoConsumer>();
 builder.Services.AddMassTransit(x =>
 {
     x.SetKebabCaseEndpointNameFormatter();
@@ -20,7 +17,11 @@ builder.Services.AddMassTransit(x =>
 
 var app = builder.Build();
 app.UseSwagger();
-app.UseSwaggerUI();
+app.UseSwaggerUI(options =>
+{
+    options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+    options.RoutePrefix = string.Empty;
+});
 app.UseHttpsRedirection();
 
 app.MapPost("/evento", async (string nome,
@@ -35,6 +36,7 @@ app.MapPost("/evento", async (string nome,
 
 app.Run();
 
+public partial class Program { }
 public interface ICriaAlunoProducer
 {
     Task Send(CriaAlunoEvent @event);
