@@ -1,4 +1,5 @@
 ﻿using BG.PubSub.Application.Abstractions;
+using FluentValidation;
 using MassTransit;
 using Microsoft.Extensions.Logging;
 
@@ -8,6 +9,7 @@ public class CriaAlunoConsumer : IConsumer<CriaAlunoEvent>
 {
     private readonly ILogger<CriaAlunoConsumer> _logger;
     private readonly IEventHandler<CriaAlunoEvent> _handler;
+    private readonly IAlunoRepository _repository;
     public CriaAlunoConsumer(ILogger<CriaAlunoConsumer> logger, IEventHandler<CriaAlunoEvent> handler)
     {
         _logger = logger;

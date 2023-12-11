@@ -1,12 +1,13 @@
 ﻿using BG.PubSub.Application.Abstractions;
-using BG.PubSub.Application.Features;
+using BG.PubSub.Application.Entities;
 
 namespace BG.PubSub.Infra.Repositories;
 
 public class AlunoRepository : IAlunoRepository
 {
-    public async Task Insert(CriaAlunoEvent @event)
+    public async Task<Guid?> Incluir(Aluno aluno)
     {
-        await Console.Out.WriteLineAsync($"Event from Repository : {@event.Nome}");
+        await Console.Out.WriteLineAsync($"Event from Repository : {aluno.Nome}");
+        return Guid.NewGuid();
     }
 }

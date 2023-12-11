@@ -2,8 +2,7 @@
 
 namespace BG.PubSub.Application.Features;
 
-public class CriaAlunoCommand : ICommand
+public record CriaAlunoCommand(string Nome) : ICommand
 {
     public Guid Id = Guid.NewGuid();
-    public required string Nome { get; set; }
 }

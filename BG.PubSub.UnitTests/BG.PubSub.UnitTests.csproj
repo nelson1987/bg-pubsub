@@ -27,4 +27,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BG.PubSub.Application\BG.PubSub.Application.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -23,7 +23,7 @@ app.MapPost("/evento", async (string nome,
     CancellationToken cancellationToken,
     [FromServices] ICommandHandler<CriaAlunoCommand> handler) =>
 {
-    var evento = new CriaAlunoCommand() { Nome = nome };
+    var evento = new CriaAlunoCommand(nome);
     await handler.Handle(evento, cancellationToken);
 })
 .WithName("PublicaEvento")

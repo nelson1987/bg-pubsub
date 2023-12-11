@@ -1,4 +1,5 @@
 ﻿using BG.PubSub.Application.Abstractions;
+using FluentResults;
 using MassTransit;
 using Microsoft.Extensions.Logging;
 
@@ -15,10 +16,10 @@ public class CriaAlunoProducer : ICriaAlunoProducer
         _logger = logger;
     }
 
-    public Task Send(CriaAlunoEvent @event)
+    public async Task<Result> Send(CriaAlunoEvent @event)
     {
-        _producer.Publish(@event);
+        await _producer.Publish(@event);
         _logger.LogInformation($"Mensagem Produzida {nameof(@event)}.");
-        return Task.CompletedTask;
+        return Result.Ok();
     }
 }

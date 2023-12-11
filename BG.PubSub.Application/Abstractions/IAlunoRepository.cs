@@ -1,9 +1,9 @@
-﻿using BG.PubSub.Application.Features;
+﻿using BG.PubSub.Application.Entities;
 
 namespace BG.PubSub.Application.Abstractions
 {
     public interface IAlunoRepository
     {
-        Task Insert(CriaAlunoEvent @event);
+        Task<Guid?> Incluir(Aluno aluno);
     }
 }

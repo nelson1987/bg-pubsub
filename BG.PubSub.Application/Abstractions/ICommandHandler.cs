@@ -1,7 +1,9 @@
-﻿namespace BG.PubSub.Application.Abstractions
+﻿using FluentResults;
+
+namespace BG.PubSub.Application.Abstractions
 {
     public interface ICommandHandler<TCommand> where TCommand : ICommand
     {
-        Task Handle(TCommand command, CancellationToken cancellationToken);
+        Task<Result> Handle(TCommand command, CancellationToken cancellationToken);
     }
 }
