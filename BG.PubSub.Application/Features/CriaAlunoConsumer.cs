@@ -2,6 +2,7 @@
 using FluentValidation;
 using MassTransit;
 using Microsoft.Extensions.Logging;
+using System.Text.Json;
 
 namespace BG.PubSub.Application.Features;
 
@@ -20,7 +21,15 @@ public class CriaAlunoConsumer : IConsumer<CriaAlunoEvent>
     {
         var message = context.Message;
         await Console.Out.WriteLineAsync($"Message from Producer : {message.Nome}");
-        _logger.LogInformation($"Mensagem Consumida {message}.");
+        _logger.LogInformation($"Mensagem Consumida {message.ToJson()}.");
         await _handler.Handle(message);
     }
+}
+public static class Extensions
+{
+    public static string ToJson(this object model)
+    {
+        return JsonSerializer.Serialize(model);
+    }
+}
 }
