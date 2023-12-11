@@ -3,6 +3,7 @@ using BG.PubSub.Application.Abstractions;
 using BG.PubSub.Application.Features;
 using BG.PubSub.Infra;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
@@ -27,7 +28,26 @@ app.MapPost("/evento", async (string nome,
     await handler.Handle(evento, cancellationToken);
 })
 .WithName("PublicaEvento")
-.WithOpenApi();
+.WithOpenApi(operation =>
+{
+    operation.Description =
+        "Envio de evento para ser consumido via RabbitMq";
+    operation.Summary = "Efetua a conversão de uma temperatura em Fahrenheit";
+    operation.Parameters[0].Description = "Temperatura em graus Fahrenheit a ser convertida";
+    operation.Parameters[0].AllowEmptyValue = false;
+    operation.Responses = new OpenApiResponses
+    {
+        ["200"] = new OpenApiResponse
+        {
+            Description = "Resultado da conversão (com valores em Celsius e Kelvin)"
+        },
+        ["400"] = new OpenApiResponse
+        {
+            Description = "Temperatura em Fahrenheit inválida"
+        }
+    };
+    return operation;
+});
 
 app.Run();
 
