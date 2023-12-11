@@ -26,7 +26,12 @@ namespace BG.PubSub.Application
                 x.AddConsumer<CriaAlunoConsumer>();
                 x.UsingRabbitMq((ctx, cfg) =>
                 {
+<<<<<<< Updated upstream
                     cfg.Host("localhost", 5672, "vhost", "local", (x) =>
+=======
+                    //cfg.Host() "amqp://guest:guest@localhost:5672");
+                    cfg.Host("localhost", 5672, "/", "local", (x) =>
+>>>>>>> Stashed changes
                     {
                         x.Username("guest");
                         x.Password("guest");
