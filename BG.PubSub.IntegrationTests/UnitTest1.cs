@@ -1,4 +1,4 @@
-using BG.PubSub.Api.Events;
+using BG.PubSub.Application.Features;
 using Ductus.FluentDocker.Model.Common;
 using Ductus.FluentDocker.Model.Compose;
 using Ductus.FluentDocker.Services;
@@ -23,7 +23,7 @@ public sealed class RabbitMqContainerTest : IClassFixture<MyTestFixture>
         var testHarness = application.Services.GetTestHarness();
         using var client = application.CreateClient();
         var nome = "nelson";
-        var submitOrderResponse = await client.PostAsync($"/evento?nome={nome}", null);
+        await client.PostAsync($"/evento?nome={nome}", null);
         var consumerTest = testHarness.GetConsumerHarness<CriaAlunoConsumer>();
         Assert.True(await consumerTest.Consumed.Any<CriaAlunoEvent>(x => x.Context.Message.Nome == nome));
     }
