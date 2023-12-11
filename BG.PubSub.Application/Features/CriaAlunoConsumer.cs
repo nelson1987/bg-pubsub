@@ -32,4 +32,3 @@ public static class Extensions
         return JsonSerializer.Serialize(model);
     }
 }
-}
