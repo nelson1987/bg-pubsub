@@ -2,4 +2,4 @@
 
 namespace BG.PubSub.Application.Features.Transacoes;
 
-public record RealizarTransferenciaCommand(string Nome) : ICommand;
+public record RealizaTransferenciaCommand(string Nome) : ICommand;

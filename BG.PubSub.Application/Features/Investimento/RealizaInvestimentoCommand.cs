@@ -2,4 +2,4 @@
 
 namespace BG.PubSub.Application.Features.Investimento;
 
-public record RealizarInvestimentoCommand(string Nome) : ICommand;
+public record RealizaInvestimentoCommand(string Nome) : ICommand;

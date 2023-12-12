@@ -31,4 +31,11 @@
     <ProjectReference Include="..\BG.PubSub.Application\BG.PubSub.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="CartoesCredito\" />
+    <Folder Include="Contas\" />
+    <Folder Include="ExtratoCartoes\" />
+    <Folder Include="Faturas\" />
+  </ItemGroup>
+
 </Project>

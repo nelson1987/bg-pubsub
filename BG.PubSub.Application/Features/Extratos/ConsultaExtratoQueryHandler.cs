@@ -3,9 +3,9 @@ using FluentResults;
 
 namespace BG.PubSub.Application.Features.Extratos;
 
-public class ConsultarExtratoQueryHandler : IQueryHandler<ConsultarExtratoQuery>
+public class ConsultaExtratoQueryHandler : IQueryHandler<ConsultaExtratoQuery>
 {
-    public Task<Result> Handle(ConsultarExtratoQuery command, CancellationToken cancellationToken)
+    public Task<Result> Handle(ConsultaExtratoQuery command, CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
     }

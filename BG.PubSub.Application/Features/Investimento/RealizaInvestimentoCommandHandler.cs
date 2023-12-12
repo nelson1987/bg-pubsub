@@ -4,16 +4,16 @@ using BG.PubSub.Application.Entities;
 
 namespace BG.PubSub.Application.Features.Investimento;
 
-public class RealizarInvestimentoCommandHandler : ICommandHandler<RealizarInvestimentoCommand>
+public class RealizaInvestimentoCommandHandler : ICommandHandler<RealizaInvestimentoCommand>
 {
     private readonly ITransacaoRepository _transacaoRepository;
 
-    public RealizarInvestimentoCommandHandler(ITransacaoRepository transacaoRepository)
+    public RealizaInvestimentoCommandHandler(ITransacaoRepository transacaoRepository)
     {
         _transacaoRepository = transacaoRepository;
     }
 
-    public async Task<Result> Handle(RealizarInvestimentoCommand command, CancellationToken cancellationToken)
+    public async Task<Result> Handle(RealizaInvestimentoCommand command, CancellationToken cancellationToken)
     {
         await _transacaoRepository.Incluir(new Transacao(), cancellationToken);
         return Result.Ok();

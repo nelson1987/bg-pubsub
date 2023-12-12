@@ -4,16 +4,16 @@ using FluentResults;
 
 namespace BG.PubSub.Application.Features.Transacoes;
 
-public class RealizarCreditoCommandHandler : ICommandHandler<RealizarCreditoCommand>
+public class RealizaTransferenciaCommandHandler : ICommandHandler<RealizaTransferenciaCommand>
 {
     private readonly ITransacaoRepository _transacaoRepository;
 
-    public RealizarCreditoCommandHandler(ITransacaoRepository transacaoRepository)
+    public RealizaTransferenciaCommandHandler(ITransacaoRepository transacaoRepository)
     {
         _transacaoRepository = transacaoRepository;
     }
 
-    public async Task<Result> Handle(RealizarCreditoCommand command, CancellationToken cancellationToken)
+    public async Task<Result> Handle(RealizaTransferenciaCommand command, CancellationToken cancellationToken)
     {
         await _transacaoRepository.Incluir(new Transacao(), cancellationToken);
         throw new NotImplementedException();

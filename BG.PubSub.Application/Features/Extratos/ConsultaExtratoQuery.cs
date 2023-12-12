@@ -2,4 +2,4 @@
 
 namespace BG.PubSub.Application.Features.Extratos;
 
-public record ConsultarExtratoQuery(string Nome) : IQuery;
+public record ConsultaExtratoQuery(string Nome) : IQuery;

@@ -69,49 +69,49 @@ app.MapPost("/conta", async (CancellationToken cancellationToken,
 });
 app.MapPut("/conta/{numeroConta}", async (string numeroConta, 
     CancellationToken cancellationToken,
-    [FromServices] ICommandHandler<RealizarInvestimentoCommand> handler) =>
+    [FromServices] ICommandHandler<RealizaInvestimentoCommand> handler) =>
 {
-    var evento = new RealizarInvestimentoCommand("nome");
+    var evento = new RealizaInvestimentoCommand("nome");
     await handler.Handle(evento, cancellationToken);
 });
 app.MapDelete("/conta/{numeroConta}", async (string numeroConta, 
     CancellationToken cancellationToken,
-    [FromServices] ICommandHandler<RealizarInvestimentoCommand> handler) =>
+    [FromServices] ICommandHandler<RealizaInvestimentoCommand> handler) =>
 {
-    var evento = new RealizarInvestimentoCommand("nome");
+    var evento = new RealizaInvestimentoCommand("nome");
     await handler.Handle(evento, cancellationToken);
 });
 app.MapPost("/conta-remunerada", async (CancellationToken cancellationToken,
-    [FromServices] ICommandHandler<RealizarInvestimentoCommand> handler
+    [FromServices] ICommandHandler<RealizaInvestimentoCommand> handler
     ) =>
 {
-    var evento = new RealizarInvestimentoCommand("nome");
+    var evento = new RealizaInvestimentoCommand("nome");
     await handler.Handle(evento, cancellationToken);
 });
 app.MapGet("/saldo", async (CancellationToken cancellationToken,
-    [FromServices] ICommandHandler<RealizarInvestimentoCommand> handler
+    [FromServices] ICommandHandler<RealizaInvestimentoCommand> handler
     ) =>
 {
-    var evento = new RealizarInvestimentoCommand("nome");
+    var evento = new RealizaInvestimentoCommand("nome");
     await handler.Handle(evento, cancellationToken);
 });
 app.MapGet("/extrato", async (CancellationToken cancellationToken,
-    [FromServices] ICommandHandler<RealizarInvestimentoCommand> handler
+    [FromServices] ICommandHandler<RealizaInvestimentoCommand> handler
     ) =>
 {
-    var evento = new RealizarInvestimentoCommand("nome");
+    var evento = new RealizaInvestimentoCommand("nome");
     await handler.Handle(evento, cancellationToken);
 });
 app.MapPost("/transacao", async (CancellationToken cancellationToken,
-    [FromServices] ICommandHandler<RealizarTransferenciaCommand> handler) =>
+    [FromServices] ICommandHandler<RealizaTransferenciaCommand> handler) =>
 {
-    var evento = new RealizarTransferenciaCommand("nome");
+    var evento = new RealizaTransferenciaCommand("nome");
     await handler.Handle(evento, cancellationToken);
 });
 app.MapPost("/investimento", async (CancellationToken cancellationToken,
-    [FromServices] ICommandHandler<RealizarInvestimentoCommand>  handler ) =>
+    [FromServices] ICommandHandler<RealizaInvestimentoCommand>  handler ) =>
 {
-    var evento = new RealizarInvestimentoCommand("nome");
+    var evento = new RealizaInvestimentoCommand("nome");
     await handler.Handle(evento, cancellationToken);
 });
 

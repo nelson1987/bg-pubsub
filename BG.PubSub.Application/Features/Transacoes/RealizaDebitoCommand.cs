@@ -2,4 +2,4 @@
 
 namespace BG.PubSub.Application.Features.Transacoes;
 
-public record RealizarCreditoCommand(string Nome) : ICommand;
+public record RealizaDebitoCommand(string Nome) : ICommand;
