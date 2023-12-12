@@ -1,7 +1,7 @@
 ﻿using BG.PubSub.Application.Abstractions;
 using FluentResults;
 
-namespace BG.PubSub.Application.Features.Fatura;
+namespace BG.PubSub.Application.Features.Faturas;
 
 public class VisualizarFaturaQueryHandler : IQueryHandler<VisualizarFaturaQuery>
 {

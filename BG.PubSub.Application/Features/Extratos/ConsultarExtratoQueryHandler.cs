@@ -1,7 +1,7 @@
 ﻿using BG.PubSub.Application.Abstractions;
 using FluentResults;
 
-namespace BG.PubSub.Application.Features.Extrato;
+namespace BG.PubSub.Application.Features.Extratos;
 
 public class ConsultarExtratoQueryHandler : IQueryHandler<ConsultarExtratoQuery>
 {

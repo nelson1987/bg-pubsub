@@ -15,7 +15,7 @@ public class ExcluirContaCommandHandler : ICommandHandler<ExcluirContaCommand>
 
     public async Task<Result> Handle(ExcluirContaCommand command, CancellationToken cancellationToken)
     {
-        Guid id = await _contaRepository.Excluir(new Conta(), cancellationToken);
-        return Result.Ok(id);
+        Guid? id = await _contaRepository.Excluir(new Conta(), cancellationToken);
+        return Result.Ok();
     }
 }

@@ -1,7 +1,7 @@
 ﻿using BG.PubSub.Application.Abstractions;
 using FluentResults;
 
-namespace BG.PubSub.Application.Features.CartaoCredito;
+namespace BG.PubSub.Application.Features.CartaoCreditos;
 
 public class SolicitarCartaoCreditoCommandHandler : ICommandHandler<SolicitarCartaoCreditoCommand>
 {

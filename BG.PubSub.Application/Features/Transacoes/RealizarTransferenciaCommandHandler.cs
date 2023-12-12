@@ -2,18 +2,18 @@
 using BG.PubSub.Application.Entities;
 using FluentResults;
 
-namespace BG.PubSub.Application.Features.Transacao;
+namespace BG.PubSub.Application.Features.Transacoes;
 
-public class RealizarDebitoCommandHandler : ICommandHandler<RealizarDebitoCommand>
+public class RealizarTransferenciaCommandHandler : ICommandHandler<RealizarTransferenciaCommand>
 {
     private readonly ITransacaoRepository _transacaoRepository;
 
-    public RealizarDebitoCommandHandler(ITransacaoRepository transacaoRepository)
+    public RealizarTransferenciaCommandHandler(ITransacaoRepository transacaoRepository)
     {
         _transacaoRepository = transacaoRepository;
     }
 
-    public Task<Result> Handle(RealizarDebitoCommand command, CancellationToken cancellationToken)
+    public async Task<Result> Handle(RealizarTransferenciaCommand command, CancellationToken cancellationToken)
     {
         await _transacaoRepository.Incluir(new Transacao(), cancellationToken);
         throw new NotImplementedException();

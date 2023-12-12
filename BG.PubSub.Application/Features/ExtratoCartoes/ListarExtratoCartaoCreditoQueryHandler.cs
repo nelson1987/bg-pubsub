@@ -1,7 +1,7 @@
 ﻿using BG.PubSub.Application.Abstractions;
 using FluentResults;
 
-namespace BG.PubSub.Application.Features.ExtratoCartao;
+namespace BG.PubSub.Application.Features.ExtratoCartoes;
 
 public class ListarExtratoCartaoCreditoQueryHandler : IQueryHandler<ListarExtratoCartaoCreditoQuery>
 {

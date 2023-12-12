@@ -15,7 +15,7 @@ public class CriarContaCommandHandler : ICommandHandler<CriarContaCommand>
 
     public async Task<Result> Handle(CriarContaCommand command, CancellationToken cancellationToken)
     {
-        Guid id = await _contaRepository.Incluir(new Conta(), cancellationToken);
-        return Result.Ok(id);
+        Guid? id = await _contaRepository.Incluir(new Conta(), cancellationToken);
+        return Result.Ok();
     }
 }

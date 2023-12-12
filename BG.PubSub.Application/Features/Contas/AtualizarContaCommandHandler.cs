@@ -15,7 +15,7 @@ public class AtualizarContaCommandHandler : ICommandHandler<AtualizarContaComman
 
     public async Task<Result> Handle(AtualizarContaCommand command, CancellationToken cancellationToken)
     {
-        Guid id = await _contaRepository.Atualizar(new Conta(), cancellationToken);
-        return Result.Ok(id);
+        Guid? id = await _contaRepository.Atualizar(new Conta(), cancellationToken);
+        return Result.Ok();
     }
 }
