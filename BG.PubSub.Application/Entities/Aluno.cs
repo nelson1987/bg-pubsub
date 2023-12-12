@@ -4,4 +4,7 @@
     {
         public string Nome { get; set; }
     }
+    public class Conta{}
+    public class ContaRemunerada : Conta{}
+    public class Transacao{}
 }

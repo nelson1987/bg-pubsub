@@ -6,4 +6,8 @@ namespace BG.PubSub.Application.Abstractions
     {
         Task<Result> Handle(TCommand command, CancellationToken cancellationToken);
     }
+    public interface IQueryHandler<TQuery> where TQuery : IQuery
+    {
+        Task<Result> Handle(TQuery command, CancellationToken cancellationToken);
+    }
 }
