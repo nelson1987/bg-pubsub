@@ -1,38 +1,65 @@
 using BG.PubSub.Application.Abstractions;
+using BG.PubSub.Application.Entities;
 using FluentResults;
 
-namespace BG.PubSub.Application.Features.Conta;
+namespace BG.PubSub.Application.Features.Contas;
 public interface IContaRepository
 {
-    
-}
-public interface ITransacaoRepository
-{
-
+    Task<Guid?> Incluir(Conta conta, CancellationToken cancellationToken); 
+    Task<Guid?> Atualizar(Conta conta, CancellationToken cancellationToken); 
+    Task<Guid?> Excluir(Conta conta, CancellationToken cancellationToken);    
 }
 public record CriarContaCommand(string Nome) : ICommand;
 public class CriarContaCommandHandler : ICommandHandler<CriarContaCommand>
 {
-    public Task<Result> Handle(CriarContaCommand command, CancellationToken cancellationToken)
+    private readonly IContaRepository _contaRepository;
+
+    public CriarContaCommandHandler(IContaRepository contaRepository)
     {
-        throw new NotImplementedException();
+        _contaRepository = contaRepository;
+    }
+
+    public async Task<Result> Handle(CriarContaCommand command, CancellationToken cancellationToken)
+    {
+        Guid id = await _contaRepository.Incluir(new Conta(), cancellationToken);
+        return Result.Ok(id);
     }
 }
 public record AtualizarContaCommand(string Nome) : ICommand;
 public class AtualizarContaCommandHandler : ICommandHandler<AtualizarContaCommand>
 {
-    public Task<Result> Handle(AtualizarContaCommand command, CancellationToken cancellationToken)
+    private readonly IContaRepository _contaRepository;
+
+    public AtualizarContaCommandHandler(IContaRepository contaRepository)
     {
-        throw new NotImplementedException();
+        _contaRepository = contaRepository;
+    }
+
+    public async Task<Result> Handle(AtualizarContaCommand command, CancellationToken cancellationToken)
+    {
+        Guid id = await _contaRepository.Atualizar(new Conta(), cancellationToken);
+        return Result.Ok(id);
     }
 }
 public record ExcluirContaCommand(string Nome) : ICommand;
 public class ExcluirContaCommandHandler : ICommandHandler<ExcluirContaCommand>
 {
-    public Task<Result> Handle(ExcluirContaCommand command, CancellationToken cancellationToken)
+    private readonly IContaRepository _contaRepository;
+
+    public ExcluirContaCommandHandler(IContaRepository contaRepository)
     {
-        throw new NotImplementedException();
+        _contaRepository = contaRepository;
     }
+
+    public async Task<Result> Handle(ExcluirContaCommand command, CancellationToken cancellationToken)
+    {
+        Guid id = await _contaRepository.Excluir(new Conta(), cancellationToken);
+        return Result.Ok(id);
+    }
+}
+public interface ITransacaoRepository
+{
+
 }
 public record CriarContaRemuneradaCommand(string Nome) : ICommand;
 public class CriarContaRemuneradaCommandHandler : ICommandHandler<CriarContaRemuneradaCommand>
@@ -45,8 +72,16 @@ public class CriarContaRemuneradaCommandHandler : ICommandHandler<CriarContaRemu
 public record RealizarDebitoCommand(string Nome) : ICommand;
 public class RealizarDebitoCommandHandler : ICommandHandler<RealizarDebitoCommand>
 {
+    private readonly ITransacaoRepository _transacaoRepository;
+
+    public RealizarDebitoCommandHandler(ITransacaoRepository transacaoRepository)
+    {
+        _transacaoRepository = transacaoRepository;
+    }
+
     public Task<Result> Handle(RealizarDebitoCommand command, CancellationToken cancellationToken)
     {
+        await _transacaoRepository.Incluir(new Transacao(), cancellationToken);
         throw new NotImplementedException();
     }
 }
@@ -55,6 +90,7 @@ public class RealizarCreditoCommandHandler : ICommandHandler<RealizarCreditoComm
 {
     public Task<Result> Handle(RealizarCreditoCommand command, CancellationToken cancellationToken)
     {
+        await _transacaoRepository.Incluir(new Transacao(), cancellationToken);
         throw new NotImplementedException();
     }
 }
@@ -63,6 +99,7 @@ public class RealizarTransferenciaCommandHandler : ICommandHandler<RealizarTrans
 {
     public Task<Result> Handle(RealizarTransferenciaCommand command, CancellationToken cancellationToken)
     {
+        await _transacaoRepository.Incluir(new Transacao(), cancellationToken);
         throw new NotImplementedException();
     }
 }
@@ -71,6 +108,7 @@ public class RealizarInvestimentoCommandHandler : ICommandHandler<RealizarInvest
 {
     public Task<Result> Handle(RealizarInvestimentoCommand command, CancellationToken cancellationToken)
     {
+        await _transacaoRepository.Incluir(new Transacao(), cancellationToken);
         throw new NotImplementedException();
     }
 }

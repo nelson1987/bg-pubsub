@@ -32,21 +32,58 @@ app.MapPost("/evento", async (string nome,
 {
     operation.Description =
         "Envio de evento para ser consumido via RabbitMq";
-    operation.Summary = "Efetua a conversão de uma temperatura em Fahrenheit";
+    operation.Summary = "Efetua a conversï¿½o de uma temperatura em Fahrenheit";
     operation.Parameters[0].Description = "Temperatura em graus Fahrenheit a ser convertida";
     operation.Parameters[0].AllowEmptyValue = false;
     operation.Responses = new OpenApiResponses
     {
         ["200"] = new OpenApiResponse
         {
-            Description = "Resultado da conversão (com valores em Celsius e Kelvin)"
+            Description = "Resultado da conversï¿½o (com valores em Celsius e Kelvin)"
         },
         ["400"] = new OpenApiResponse
         {
-            Description = "Temperatura em Fahrenheit inválida"
+            Description = "Temperatura em Fahrenheit invï¿½lida"
         }
     };
     return operation;
+});
+
+app.MapGet("/conta/{numeroConta}", async (string numeroConta, CancellationToken cancellationToken) =>
+{
+    Console.Out.WriteLine("get");
+});
+app.MapPost("/conta", async (CancellationToken cancellationToken) =>
+{
+    Console.Out.WriteLine("post");
+});
+app.MapPut("/conta/{numeroConta}", async (string numeroConta, CancellationToken cancellationToken) =>
+{
+    Console.Out.WriteLine("put");
+});
+app.MapDelete("/conta/{numeroConta}", async (string numeroConta, CancellationToken cancellationToken) =>
+{
+    Console.Out.WriteLine("delete");
+});
+app.MapPost("/conta-remunerada", async (CancellationToken cancellationToken) =>
+{
+    Console.Out.WriteLine("post");
+});
+app.MapGet("/saldo", async (CancellationToken cancellationToken) =>
+{
+    Console.Out.WriteLine("get");
+});
+app.MapGet("/extrato", async (CancellationToken cancellationToken) =>
+{
+    Console.Out.WriteLine("get");
+});
+app.MapPost("/transacao", async (CancellationToken cancellationToken) =>
+{
+    Console.Out.WriteLine("post");
+});
+app.MapPost("/investimento", async (CancellationToken cancellationToken) =>
+{
+    Console.Out.WriteLine("post");
 });
 
 app.Run();
