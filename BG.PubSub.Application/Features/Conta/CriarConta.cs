@@ -2,7 +2,14 @@ using BG.PubSub.Application.Abstractions;
 using FluentResults;
 
 namespace BG.PubSub.Application.Features.Conta;
+public interface IContaRepository
+{
+    
+}
+public interface ITransacaoRepository
+{
 
+}
 public record CriarContaCommand(string Nome) : ICommand;
 public class CriarContaCommandHandler : ICommandHandler<CriarContaCommand>
 {
