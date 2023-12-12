@@ -1,7 +1,11 @@
 using BG.PubSub.Application;
 using BG.PubSub.Application.Abstractions;
 using BG.PubSub.Application.Features;
+using BG.PubSub.Application.Features.Contas;
+using BG.PubSub.Application.Features.Investimento;
+using BG.PubSub.Application.Features.Transacoes;
 using BG.PubSub.Infra;
+using MassTransit.Internals.GraphValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
 
@@ -49,41 +53,66 @@ app.MapPost("/evento", async (string nome,
     return operation;
 });
 
-app.MapGet("/conta/{numeroConta}", async (string numeroConta, CancellationToken cancellationToken) =>
+app.MapGet("/conta/{numeroConta}", async (string numeroConta, 
+    CancellationToken cancellationToken,
+    [FromServices] IQueryHandler<ConsultarContaQuery> handler) =>
 {
-    Console.Out.WriteLine("get");
+    var evento = new ConsultarContaQuery(numeroConta);
+    await handler.Handle(evento, cancellationToken);
 });
-app.MapPost("/conta", async (CancellationToken cancellationToken) =>
+app.MapPost("/conta", async (CancellationToken cancellationToken,
+    [FromServices] ICommandHandler<CriarContaCommand> handler
+    ) =>
 {
-    Console.Out.WriteLine("post");
+    var evento = new CriarContaCommand("nome");
+    await handler.Handle(evento, cancellationToken);
 });
-app.MapPut("/conta/{numeroConta}", async (string numeroConta, CancellationToken cancellationToken) =>
+app.MapPut("/conta/{numeroConta}", async (string numeroConta, 
+    CancellationToken cancellationToken,
+    [FromServices] ICommandHandler<RealizarInvestimentoCommand> handler) =>
 {
-    Console.Out.WriteLine("put");
+    var evento = new RealizarInvestimentoCommand("nome");
+    await handler.Handle(evento, cancellationToken);
 });
-app.MapDelete("/conta/{numeroConta}", async (string numeroConta, CancellationToken cancellationToken) =>
+app.MapDelete("/conta/{numeroConta}", async (string numeroConta, 
+    CancellationToken cancellationToken,
+    [FromServices] ICommandHandler<RealizarInvestimentoCommand> handler) =>
 {
-    Console.Out.WriteLine("delete");
+    var evento = new RealizarInvestimentoCommand("nome");
+    await handler.Handle(evento, cancellationToken);
 });
-app.MapPost("/conta-remunerada", async (CancellationToken cancellationToken) =>
+app.MapPost("/conta-remunerada", async (CancellationToken cancellationToken,
+    [FromServices] ICommandHandler<RealizarInvestimentoCommand> handler
+    ) =>
 {
-    Console.Out.WriteLine("post");
+    var evento = new RealizarInvestimentoCommand("nome");
+    await handler.Handle(evento, cancellationToken);
 });
-app.MapGet("/saldo", async (CancellationToken cancellationToken) =>
+app.MapGet("/saldo", async (CancellationToken cancellationToken,
+    [FromServices] ICommandHandler<RealizarInvestimentoCommand> handler
+    ) =>
 {
-    Console.Out.WriteLine("get");
+    var evento = new RealizarInvestimentoCommand("nome");
+    await handler.Handle(evento, cancellationToken);
 });
-app.MapGet("/extrato", async (CancellationToken cancellationToken) =>
+app.MapGet("/extrato", async (CancellationToken cancellationToken,
+    [FromServices] ICommandHandler<RealizarInvestimentoCommand> handler
+    ) =>
 {
-    Console.Out.WriteLine("get");
+    var evento = new RealizarInvestimentoCommand("nome");
+    await handler.Handle(evento, cancellationToken);
 });
-app.MapPost("/transacao", async (CancellationToken cancellationToken) =>
+app.MapPost("/transacao", async (CancellationToken cancellationToken,
+    [FromServices] ICommandHandler<RealizarTransferenciaCommand> handler) =>
 {
-    Console.Out.WriteLine("post");
+    var evento = new RealizarTransferenciaCommand("nome");
+    await handler.Handle(evento, cancellationToken);
 });
-app.MapPost("/investimento", async (CancellationToken cancellationToken) =>
+app.MapPost("/investimento", async (CancellationToken cancellationToken,
+    [FromServices] ICommandHandler<RealizarInvestimentoCommand>  handler ) =>
 {
-    Console.Out.WriteLine("post");
+    var evento = new RealizarInvestimentoCommand("nome");
+    await handler.Handle(evento, cancellationToken);
 });
 
 app.Run();
