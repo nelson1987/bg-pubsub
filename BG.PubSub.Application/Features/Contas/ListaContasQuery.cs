@@ -2,4 +2,4 @@
 
 namespace BG.PubSub.Application.Features.Contas;
 
-public record CriarContaRemuneradaCommand(string Nome) : ICommand;
+public record ListaContasQuery(string Nome) : IQuery;

@@ -2,4 +2,4 @@
 
 namespace BG.PubSub.Application.Features.Contas;
 
-public record CriarContaCommand(string Nome) : ICommand;
+public record ConsultaContaQuery(string Nome) : IQuery;

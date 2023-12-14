@@ -2,4 +2,4 @@
 
 namespace BG.PubSub.Application.Features.Faturas;
 
-public record PagarFaturaCommand(string Nome) : ICommand;
+public record PagaFaturaCommand(string Nome) : ICommand;

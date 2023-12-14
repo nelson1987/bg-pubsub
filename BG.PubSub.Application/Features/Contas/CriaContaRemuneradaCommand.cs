@@ -2,4 +2,4 @@
 
 namespace BG.PubSub.Application.Features.Contas;
 
-public record AtualizarContaCommand(string Nome) : ICommand;
+public record CriaContaRemuneradaCommand(string Nome) : ICommand;

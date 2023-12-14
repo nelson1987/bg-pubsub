@@ -3,9 +3,9 @@ using FluentResults;
 
 namespace BG.PubSub.Application.Features.CartaoCreditos;
 
-public class AlterarLimiteCommandHandler : ICommandHandler<AlterarLimiteCommand>
+public class AlteraLimiteCommandHandler : ICommandHandler<AlteraLimiteCommand>
 {
-    public Task<Result> Handle(AlterarLimiteCommand command, CancellationToken cancellationToken)
+    public Task<Result> Handle(AlteraLimiteCommand command, CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
     }

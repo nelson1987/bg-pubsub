@@ -2,4 +2,4 @@
 
 namespace BG.PubSub.Application.Features.CartaoCreditos;
 
-public record AlterarLimiteCommand(string Nome) : ICommand;
+public record AlteraLimiteCommand(string Nome) : ICommand;

@@ -55,16 +55,16 @@ app.MapPost("/evento", async (string nome,
 
 app.MapGet("/conta/{numeroConta}", async (string numeroConta, 
     CancellationToken cancellationToken,
-    [FromServices] IQueryHandler<ConsultarContaQuery> handler) =>
+    [FromServices] IQueryHandler<ConsultaContaQuery> handler) =>
 {
-    var evento = new ConsultarContaQuery(numeroConta);
+    var evento = new ConsultaContaQuery(numeroConta);
     await handler.Handle(evento, cancellationToken);
 });
 app.MapPost("/conta", async (CancellationToken cancellationToken,
-    [FromServices] ICommandHandler<CriarContaCommand> handler
+    [FromServices] ICommandHandler<CriaContaCommand> handler
     ) =>
 {
-    var evento = new CriarContaCommand("nome");
+    var evento = new CriaContaCommand("nome");
     await handler.Handle(evento, cancellationToken);
 });
 app.MapPut("/conta/{numeroConta}", async (string numeroConta, 

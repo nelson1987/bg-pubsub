@@ -3,9 +3,9 @@ using FluentResults;
 
 namespace BG.PubSub.Application.Features.Contas;
 
-public class ConsultarSaldoQueryHandler : IQueryHandler<ConsultarSaldoQuery>
+public class ConsultaContaQueryHandler : IQueryHandler<ConsultaContaQuery>
 {
-    public Task<Result> Handle(ConsultarSaldoQuery command, CancellationToken cancellationToken)
+    public Task<Result> Handle(ConsultaContaQuery command, CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
     }

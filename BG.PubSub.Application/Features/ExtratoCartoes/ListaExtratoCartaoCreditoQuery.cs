@@ -2,4 +2,4 @@
 
 namespace BG.PubSub.Application.Features.ExtratoCartoes;
 
-public record ListarExtratoCartaoCreditoQuery(string Nome) : IQuery;
+public record ListaExtratoCartaoCreditoQuery(string Nome) : IQuery;

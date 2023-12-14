@@ -2,4 +2,4 @@
 
 namespace BG.PubSub.Application.Features.Contas;
 
-public record ConsultarSaldoQuery(string Nome) : IQuery;
+public record CriaContaCommand(string Nome) : ICommand;

@@ -2,4 +2,4 @@
 
 namespace BG.PubSub.Application.Features.Contas;
 
-public record ExcluirContaCommand(string Nome) : ICommand;
+public record ConsultaSaldoQuery(string Nome) : IQuery;

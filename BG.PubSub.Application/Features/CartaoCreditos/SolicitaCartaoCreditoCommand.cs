@@ -2,4 +2,4 @@
 
 namespace BG.PubSub.Application.Features.CartaoCreditos;
 
-public record SolicitarCartaoCreditoCommand(string Nome) : ICommand;
+public record SolicitaCartaoCreditoCommand(string Nome) : ICommand;

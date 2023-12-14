@@ -2,4 +2,4 @@
 
 namespace BG.PubSub.Application.Features.Faturas;
 
-public record VisualizarFaturaQuery(string Nome) : IQuery;
+public record VisualizaFaturaQuery(string Nome) : IQuery;
