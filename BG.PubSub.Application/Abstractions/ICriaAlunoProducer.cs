@@ -7,3 +7,7 @@ public interface ICriaAlunoProducer
 {
     Task<Result> Send(CriaAlunoEvent @event);
 }
+public interface ICriaContaProducer
+{
+    Task<Result> Send(CriaContaEvent @event);
+}

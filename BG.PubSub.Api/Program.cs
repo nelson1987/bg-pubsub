@@ -2,8 +2,6 @@ using BG.PubSub.Application;
 using BG.PubSub.Application.Abstractions;
 using BG.PubSub.Application.Features;
 using BG.PubSub.Application.Features.Contas;
-using BG.PubSub.Application.Features.Investimento;
-using BG.PubSub.Application.Features.Transacoes;
 using BG.PubSub.Infra;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
@@ -59,16 +57,10 @@ app.MapGet("/conta/{numeroConta}", async (string numeroConta,
     var evento = new ConsultaContaQuery(numeroConta);
     await handler.Handle(evento, cancellationToken);
 });
-app.MapPost("/conta", async (CancellationToken cancellationToken,
+app.MapPost("/conta", async (CriaContaCommand command,
+    CancellationToken cancellationToken,
     [FromServices] ICommandHandler<CriaContaCommand> handler
     ) =>
-{
-    var evento = new CriaContaCommand("nome");
-    await handler.Handle(evento, cancellationToken);
-});
-app.MapPut("/conta/{numeroConta}", async (string numeroConta,
-    CancellationToken cancellationToken,
-    [FromServices] ICommandHandler<RealizaInvestimentoCommand> handler) =>
 {
     /*
      * Ao criar uma conta precisamos do nome e de um documento do cliente
@@ -76,6 +68,13 @@ app.MapPut("/conta/{numeroConta}", async (string numeroConta,
      * a mesmo nos enviará os dados completos da conta que serão persistidos na collection do MongoDb
      * Ao dar GET nesse documento, atualizará caso a conta tenha sido aberta.
      */
+    await handler.Handle(command, cancellationToken);
+});
+/*
+app.MapPut("/conta/{numeroConta}", async (string numeroConta,
+    CancellationToken cancellationToken,
+    [FromServices] ICommandHandler<RealizaInvestimentoCommand> handler) =>
+{
 
     var evento = new RealizaInvestimentoCommand("nome");
     await handler.Handle(evento, cancellationToken);
@@ -120,7 +119,7 @@ app.MapPost("/investimento", async (CancellationToken cancellationToken,
     var evento = new RealizaInvestimentoCommand("nome");
     await handler.Handle(evento, cancellationToken);
 });
-
+*/
 app.Run();
 
 public partial class Program { }

@@ -8,6 +8,7 @@ public static class DependencyInjection
     public static IServiceCollection AddInfrastructure(this IServiceCollection services)
     {
         services.AddTransient<IAlunoRepository, AlunoRepository>();
+        services.AddTransient<IContaRepository, ContaRepository>();
         return services;
     }
 };
