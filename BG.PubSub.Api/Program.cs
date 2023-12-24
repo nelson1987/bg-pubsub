@@ -5,7 +5,6 @@ using BG.PubSub.Application.Features.Contas;
 using BG.PubSub.Application.Features.Investimento;
 using BG.PubSub.Application.Features.Transacoes;
 using BG.PubSub.Infra;
-using MassTransit.Internals.GraphValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
 
@@ -53,7 +52,7 @@ app.MapPost("/evento", async (string nome,
     return operation;
 });
 
-app.MapGet("/conta/{numeroConta}", async (string numeroConta, 
+app.MapGet("/conta/{numeroConta}", async (string numeroConta,
     CancellationToken cancellationToken,
     [FromServices] IQueryHandler<ConsultaContaQuery> handler) =>
 {
@@ -67,14 +66,21 @@ app.MapPost("/conta", async (CancellationToken cancellationToken,
     var evento = new CriaContaCommand("nome");
     await handler.Handle(evento, cancellationToken);
 });
-app.MapPut("/conta/{numeroConta}", async (string numeroConta, 
+app.MapPut("/conta/{numeroConta}", async (string numeroConta,
     CancellationToken cancellationToken,
     [FromServices] ICommandHandler<RealizaInvestimentoCommand> handler) =>
 {
+    /*
+     * Ao criar uma conta precisamos do nome e de um documento do cliente
+     * enviaremos o cadastro de conta para a API de Cadastro via Fila
+     * a mesmo nos enviará os dados completos da conta que serão persistidos na collection do MongoDb
+     * Ao dar GET nesse documento, atualizará caso a conta tenha sido aberta.
+     */
+
     var evento = new RealizaInvestimentoCommand("nome");
     await handler.Handle(evento, cancellationToken);
 });
-app.MapDelete("/conta/{numeroConta}", async (string numeroConta, 
+app.MapDelete("/conta/{numeroConta}", async (string numeroConta,
     CancellationToken cancellationToken,
     [FromServices] ICommandHandler<RealizaInvestimentoCommand> handler) =>
 {
@@ -109,7 +115,7 @@ app.MapPost("/transacao", async (CancellationToken cancellationToken,
     await handler.Handle(evento, cancellationToken);
 });
 app.MapPost("/investimento", async (CancellationToken cancellationToken,
-    [FromServices] ICommandHandler<RealizaInvestimentoCommand>  handler ) =>
+    [FromServices] ICommandHandler<RealizaInvestimentoCommand> handler) =>
 {
     var evento = new RealizaInvestimentoCommand("nome");
     await handler.Handle(evento, cancellationToken);
