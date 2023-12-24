@@ -1,10 +1,9 @@
 ﻿using BG.PubSub.Application.Features;
 using FluentResults;
 
-namespace BG.PubSub.Application.Abstractions
+namespace BG.PubSub.Application.Abstractions;
+
+public interface ICriaAlunoProducer
 {
-    public interface ICriaAlunoProducer
-    {
-        Task<Result> Send(CriaAlunoEvent @event);
-    }
+    Task<Result> Send(CriaAlunoEvent @event);
 }

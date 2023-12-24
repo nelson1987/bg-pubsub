@@ -1,9 +1,8 @@
 ﻿using BG.PubSub.Application.Entities;
 
-namespace BG.PubSub.Application.Abstractions
+namespace BG.PubSub.Application.Abstractions;
+
+public interface IAlunoRepository
 {
-    public interface IAlunoRepository
-    {
-        Task<Guid?> Incluir(Aluno aluno);
-    }
+    Task<Guid?> Incluir(Aluno aluno);
 }

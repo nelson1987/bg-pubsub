@@ -16,7 +16,7 @@ public class RealizaInvestimentoCommandTests
 {
     private readonly IFixture _fixture = new Fixture().Customize(new AutoMoqCustomization { ConfigureMembers = true });
     private readonly RealizaInvestimentoCommand _command;
-    private readonly IValidator<CriaAlunoCommand> _validator;
+    private readonly IValidator<RealizaInvestimentoCommand> _validator;
     private readonly RealizaInvestimentoCommandHandler _handler;
     private readonly CancellationToken _token = CancellationToken.None;
 
@@ -37,7 +37,7 @@ public class RealizaInvestimentoCommandTests
                 .Setup(x => x.Validate(_command))
                 .Returns(new ValidationResult());
         _handler = _fixture.Create<RealizaInvestimentoCommandHandler>();
-        _validator = _fixture.Create<RealizaInvestimentoCommandValidator>();
+        //_validator = _fixture.Create<RealizaInvestimentoCommandValidator>();
     }
 
     [Fact]

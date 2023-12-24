@@ -4,7 +4,6 @@ using BG.PubSub.Application.Abstractions;
 using BG.PubSub.Application.Entities;
 using BG.PubSub.Application.Features;
 using BG.PubSub.Application.Features.Extratos;
-using BG.PubSub.Application.Features.Investimento;
 using FluentResults;
 using FluentValidation;
 using FluentValidation.Results;
@@ -38,7 +37,7 @@ public class ConsultaExtratoQueryTests
                 .Setup(x => x.Validate(_command))
                 .Returns(new ValidationResult());
         _handler = _fixture.Create<ConsultaExtratoQueryHandler>();
-        _validator = _fixture.Create<ConsultaExtratoQueryValidator>();
+        //_validator = _fixture.Create<ConsultaExtratoQueryValidator>();
     }
 
     [Fact]

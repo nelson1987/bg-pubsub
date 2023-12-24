@@ -13,7 +13,7 @@ using System.Text;
 namespace BG.PubSub.IntegrationTests;
 public sealed class RabbitMqContainerTest : IClassFixture<MyTestFixture>
 {
-    [Fact(DisplayName ="Teste Without container(Mock - TestHarness)")]
+    [Fact(DisplayName = "Teste Without container(Mock - TestHarness)")]
     public async Task CriacaoApi()
     {
         await using var application = new WebApplicationFactory<Program>()
@@ -35,7 +35,7 @@ public sealed class RabbitMqContainerTest : IClassFixture<MyTestFixture>
 
         const string message = "Hello World!";
 
-        string actualMessage = null;
+        string? actualMessage = null;
 
         // Signal the completion of message reception.
         EventWaitHandle waitHandle = new ManualResetEvent(false);

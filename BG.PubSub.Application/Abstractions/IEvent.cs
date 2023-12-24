@@ -1,6 +1,5 @@
-﻿namespace BG.PubSub.Application.Abstractions
+﻿namespace BG.PubSub.Application.Abstractions;
+
+public interface IEvent
 {
-    public interface IEvent
-    {
-    }
 }

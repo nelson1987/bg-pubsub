@@ -37,7 +37,7 @@ public class RealizaCreditoCommandTests
                 .Setup(x => x.Validate(_command))
                 .Returns(new ValidationResult());
         _handler = _fixture.Create<RealizaCreditoCommandHandler>();
-        _validator = _fixture.Create<RealizaCreditoCommandValidator>();
+        //_validator = _fixture.Create<RealizaCreditoCommandValidator>();
     }
 
     [Fact]

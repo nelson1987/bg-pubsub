@@ -1,5 +1,4 @@
 ﻿using BG.PubSub.Application.Abstractions;
-using FluentValidation;
 using MassTransit;
 using Microsoft.Extensions.Logging;
 using System.Text.Json;
@@ -31,4 +30,8 @@ public static class Extensions
     {
         return JsonSerializer.Serialize(model);
     }
+    //public static T MapTo<T>(this object model)
+    //{
+    //    //return JsonSerializer.Serialize(model);
+    //}
 }

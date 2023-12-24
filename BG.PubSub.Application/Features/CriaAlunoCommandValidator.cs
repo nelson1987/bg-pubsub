@@ -1,13 +1,12 @@
 ﻿using FluentValidation;
 
-namespace BG.PubSub.Application.Features
+namespace BG.PubSub.Application.Features;
+
+public class CriaAlunoCommandValidator : AbstractValidator<CriaAlunoCommand>
 {
-    public class CriaAlunoCommandValidator : AbstractValidator<CriaAlunoCommand>
+    public CriaAlunoCommandValidator()
     {
-        public CriaAlunoCommandValidator()
-        {
-            RuleFor(x => x.Nome)
-                 .NotEmpty();
-        }
+        RuleFor(x => x.Nome)
+             .NotEmpty();
     }
 }

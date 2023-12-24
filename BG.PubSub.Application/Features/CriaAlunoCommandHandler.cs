@@ -19,14 +19,14 @@ public class CriaAlunoCommandHandler : ICommandHandler<CriaAlunoCommand>
 
     public async Task<Result> Handle(CriaAlunoCommand command, CancellationToken cancellationToken)
     {
-        var validation = _requestValidator.Validate(command);
+        var validation = await _requestValidator.ValidateAsync(command, cancellationToken);
         if (!validation.IsValid)
         {
             return validation.ToFailResult();
         }
         await Console.Out.WriteLineAsync($"Command from CommandHandler : {command.Nome}");
         var evento = new CriaAlunoEvent() { Nome = command.Nome };
-        var eventoProduzido = await _producer.Send(evento);
+        var eventoProduzido = await _producer.Send(evento);// command.MapTo<CriaAlunoEvent>());
         if (eventoProduzido!.IsFailed)
             return eventoProduzido;
         /*

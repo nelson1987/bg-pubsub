@@ -1,7 +1,6 @@
-﻿namespace BG.PubSub.Application.Entities
+﻿namespace BG.PubSub.Application.Entities;
+
+public class Aluno
 {
-    public class Aluno
-    {
-        public string Nome { get; set; }
-    }
+    public required string Nome { get; set; }
 }
